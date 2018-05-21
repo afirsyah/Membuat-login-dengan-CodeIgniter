@@ -1,0 +1,210 @@
+@import "compass/css3";
+
+/*
+ * Parameters
+ */
+$pixel_size: 5px;
+$time: 1.5s;
+$colors: #D80000 #706800 #F8AB00 #FFA542 #FF6410 #000000;
+
+/*
+ * color pixel matrix
+ */
+$mario_normal: 
+  0 0 0 1 1 1 1 1, 
+  0 0 1 1 1 1 1 1 1 1 1,
+  0 0 2 2 2 3 3 2 3,
+  0 2 3 2 3 3 3 2 3 3 3,
+  0 2 3 2 2 3 3 3 2 3 3 3,
+  0 2 2 3 3 3 3 2 2 2 2,
+  0 0 0 3 3 3 3 3 3 3,
+  0 0 2 2 1 2 2 2,
+  0 2 2 2 1 2 2 1 2 2 2,
+  2 2 2 2 1 1 1 1 2 2 2 2,
+  3 3 2 1 3 1 1 3 1 2 3 3,
+  3 3 3 1 1 1 1 1 1 3 3 3,
+  3 3 1 1 1 1 1 1 1 1 3 3,
+  0 0 1 1 1 0 0 1 1 1,
+  0 2 2 2 0 0 0 0 2 2 2,
+  2 2 2 2 0 0 0 0 2 2 2 2;
+
+$mario_jump: 
+  0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3,
+  0 0 0 0 0 0 1 1 1 1 1 0 0 3 3 3,
+  0 0 0 0 0 1 1 1 1 1 1 1 1 1 3 3,
+  0 0 0 0 0 2 2 2 3 3 2 3 0 2 2 2,
+  0 0 0 0 2 3 2 3 3 3 2 3 3 2 2 2,
+  0 0 0 0 2 3 2 2 3 3 3 2 3 3 3 2,
+  0 0 0 0 2 2 3 3 3 3 2 2 2 2 2,
+  0 0 0 0 0 0 3 3 3 3 3 3 3 2,
+  0 0 2 2 2 2 2 1 2 2 2 1 2,
+  0 2 2 2 2 2 2 2 1 2 2 2 1 0 0 2,
+  3 3 2 2 2 2 2 2 1 1 1 1 1 0 0 2,
+  3 3 3 0 1 1 2 1 1 3 1 1 3 1 2 2,
+  0 3 0 2 1 1 1 1 1 1 1 1 1 1 2 2,
+  0 0 2 2 2 1 1 1 1 1 1 1 1 1 2 2,
+  0 2 2 2 1 1 1 1 1 1 1,
+  0 2 0 0 1 1 1 1 ;
+
+$block:
+  5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5,
+  5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 6,
+  5 4 6 4 4 4 4 4 4 4 4 4 4 6 4 6,
+  5 4 4 4 4 5 5 5 5 5 4 4 4 4 4 6,
+  5 4 4 4 5 5 6 6 6 5 5 4 4 4 4 6,
+  5 4 4 4 5 5 6 4 4 5 5 6 4 4 4 6,
+  5 4 4 4 5 5 6 4 4 5 5 6 4 4 4 6,
+  5 4 4 4 4 6 6 4 5 5 5 6 4 4 4 6,
+  5 4 4 4 4 4 4 5 5 6 6 6 4 4 4 6,
+  5 4 4 4 4 4 4 5 5 6 4 4 4 4 4 6,
+  5 4 4 4 4 4 4 4 6 6 4 4 4 4 4 6,
+  5 4 4 4 4 4 4 5 5 4 4 4 4 4 4 6,
+  5 4 4 4 4 4 4 5 5 6 4 4 4 4 4 6,
+  5 4 6 4 4 4 4 4 6 6 4 4 4 6 4 6,
+  5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 6,
+  6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6;
+
+$coin: 
+  0 0 0 0 0 4 4 4 4 6 6 0 0 0 0 0,
+  0 0 0 0 4 4 4 4 4 4 6 6 0 0 0 0,
+  0 0 0 0 4 4 5 5 4 4 6 6 0 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 4 4 5 4 4 6 4 4 6 6 0 0 0,
+  0 0 0 0 4 4 5 5 4 4 6 6 0 0 0 0,
+  0 0 0 0 4 4 4 4 4 4 6 6 0 0 0 0,
+  0 0 0 0 0 4 4 4 4 6 6 0 0 0 0 0;
+  
+/*
+ * Draw Mixin for create box-shadows
+ */
+@mixin draw ($pixels) {
+  $shadow: 0 0 0;
+  $row_number: 1;
+  @each $row in $pixels {
+    $column_number: -8; // Center for better rotateY effect
+    @each $color_index in $row {
+      @if ($color_index > 0){
+        $shadow: $shadow, $column_number * $pixel_size $row_number * $pixel_size nth($colors, $color_index);
+      }
+      $column_number: $column_number + 1;
+    }
+    $row_number: $row_number + 1;
+  }
+  box-shadow: $shadow;
+}
+
+  
+/*
+ * Reset ans body floor background 
+ */
+
+html, body {
+  height: 100%;
+  min-height: $pixel_size * 65;
+  overflow: hidden;
+}
+
+body {
+  padding-top: $pixel_size * 48;
+  @include background-image(linear-gradient(
+      #6B8CFF, 
+      #6B8CFF $pixel_size * 65, 
+      #D54B00 $pixel_size * 65, 
+      #D54B00));
+}
+  
+/*
+ * Mario, Block(after), Coin(before)
+ */
+.mario {
+  @include draw($mario_normal);
+  animation: jump $time infinite ease-out; 
+  -webkit-animation: jump $time infinite ease-out; 
+
+  &, &:before, &:after  {
+    margin: 0 auto;
+    height: $pixel_size;
+    width: $pixel_size;
+  } 
+  
+  &:before, &:after  {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $pixel_size * 16;
+  }
+  
+  &:before {
+    -webkit-animation: coin_animation $time infinite ease-in-out;
+    animation: coin_animation $time infinite ease-in-out;
+    @include draw($coin);
+  }
+  
+  &:after {
+    -webkit-animation: block_animation $time infinite ease-out;
+    animation: block_animation $time infinite ease-out;
+    @include draw($block);
+  }
+}
+  
+/*
+ * KeyFrames animations
+ */
+@keyframes jump {
+  0% {
+    @include draw($mario_jump);
+  }
+  10% {
+    margin-top: -($pixel_size * 16);
+  }
+  20% {
+    @include draw($mario_jump);
+  }
+  20.1% {
+    margin-top: 0;
+    @include draw($mario_normal);
+  }
+}
+
+@keyframes block_animation {
+  10% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  15% {
+    -webkit-transform: translateY(-100% * 4);
+    transform: translateY(-100% * 4);
+  }
+  20% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes coin_animation {
+  10% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  20% {
+    -webkit-transform: translateY(-100% * 24) rotateY(720deg);
+    transform: translateY(-100% * 24) rotateY(720deg);
+  }
+  30% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-100% * 16);
+    transform: translateY(-100% * 16);
+  }
+  50% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
