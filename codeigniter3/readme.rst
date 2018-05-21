@@ -16,12 +16,13 @@ Mengatur konfigurasi
 *******************
 
 1. Buat database bernama ci-login
+
 Buat syntax database <https://github.com/afirsyah/membuat-form-login-dengan-framework-CodeIgniter/blob/master/codeigniter3/database%20syntax>`_.
 
 3. Selanjutnya buka file database.php di folder application/config,
+
 lalu isi username database, password database, dan nama database
 
-4. Selesai 
 
 *******************
 Release Information
